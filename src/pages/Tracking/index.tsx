@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   notFound: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   infoOwnerOrder: {
     alignItems: "center",
