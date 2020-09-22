@@ -1,4 +1,10 @@
 import cio from 'cheerio';
+
+interface ITrackingRealTime {
+  name: string;
+  date: string;
+}
+
 const track = (htmlString: string) => {
   const $ = cio.load(htmlString);
   const nodesFirstTable = $(".col-xs-4.col-xs-offset-7").find(".table tbody > tr > td");
@@ -31,4 +37,21 @@ const orderOwner = (htmlString: string) => {
   return arrayInfos;
 }
 
-export { track, orderOwner };
+const trackingRealTime = (htmlString: string) => {
+  const $ = cio.load(htmlString);
+  const nodesTrackingRealTime = $(".col-xs-offset-1.col-xs-10.bs-wizard").find(".col-xs-2.bs-wizard-step");
+  const arrayRealTime: Array<ITrackingRealTime> = [];
+  nodesTrackingRealTime.each((index, node) => {
+    const realTime = $(node);
+    const name = realTime.find('.text-center.bs-wizard-stepnum').text();
+    const date = realTime.find('.bs-wizard-info.text-center').text();
+    const dataRealTime = {
+      name,
+      date,
+    }
+    arrayRealTime.push(dataRealTime);
+  });
+  return arrayRealTime;
+}
+
+export { track, orderOwner, trackingRealTime, ITrackingRealTime };

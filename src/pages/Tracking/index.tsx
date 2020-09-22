@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView} from 'react-native';
 import Constants from 'expo-constants';
 import braspressLogo from '../../images/braspress.png';
 import { useNavigation } from '@react-navigation/native';
 import Axios from 'axios';
-import { track, orderOwner } from '../../services/BraspressAPI';
+import { track, orderOwner, trackingRealTime, ITrackingRealTime } from '../../services/BraspressAPI';
 import { Ionicons } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 
@@ -13,6 +13,7 @@ function Tracking({ route, navigation }){
 
   const [order, setOrder] = useState<Array<string>>([]);
   const [ownerOrder, setOwnerOrder] = useState<Array<string>>([]);
+  const [trackRealTime, setTrackgRealTime] = useState<ITrackingRealTime[]>([]);
 
   const { navigate, goBack } = useNavigation();
 
@@ -21,24 +22,31 @@ function Tracking({ route, navigation }){
   }, [])
 
   const tracking = async () => {
-    const response = await Axios.get(`https://blue.braspress.com/site/w/tracking/search?cnpj=${docIdentify}&documentType=${typeDoc}&numero=${numberIdentify}&isSite=true`);
-    const trackResult = track(response.data);
-    const ownerResult = orderOwner(response.data);
-    setOwnerOrder(ownerResult);
-    setOrder(trackResult);
+    try {
+      const response = await Axios.get(`https://blue.braspress.com/site/w/tracking/search?cnpj=${docIdentify}&documentType=${typeDoc}&numero=${numberIdentify}&isSite=true`);
+      const trackResult = track(response.data);
+      const ownerResult = orderOwner(response.data);
+      const realTimeResult = trackingRealTime(response.data);
+      setOrder(trackResult);
+      setOwnerOrder(ownerResult);
+      setTrackgRealTime(realTimeResult);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   function handleBack(){
     goBack();
   }
   return(
+    <ScrollView style={styles.scroll}>
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.topbar}>
           <RectButton
           onPress={handleBack}
           style={styles.arrowBack}>
-            <Ionicons name="md-arrow-back" size={40} color="#d58500" />
+            <Ionicons name="ios-arrow-back" size={40} color="#d58500" />
           </RectButton>
           <Image style={styles.logo} source={braspressLogo} />
         </View>
@@ -100,18 +108,64 @@ function Tracking({ route, navigation }){
           </View>
         </View>
 
+        <View style={styles.tracking}>
+        <View style={styles.content}>
+          <Text style={styles.titlePage}>Tracking</Text>
+          <View style={styles.line} />
+        </View>
+        {
+          trackRealTime.map((item) => (
+            <View style={styles.track} key={item.name}>
+              <Text style={styles.titleRealTime}>{item.name}</Text>
+              <Text style={styles.subTitleRealTime}>{item.date ? item.date : 'Não concluído.'}</Text>
+              {
+                item.date ? <Ionicons name="ios-checkmark" color="#48a868" size={40} /> : <Ionicons name="ios-close" color="#c02d2e" size={40} />
+              }
+            </View>
+          ))
+        }
+        </View>
       </View>
       ) : 
       <View style={styles.notFound}>
         <Text style={styles.notFoundText}>Tracking not found</Text>
         <View style={styles.line}/>
-        </View>}
+      </View>
+      }
 
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  subTitleRealTime: {
+    fontWeight: 'bold',
+    color: '#d58500',
+  },
+  titleRealTime: {
+    fontSize: 16,
+    fontWeight: '300',
+  },
+  track: {
+    backgroundColor: "#e8e8e8",
+    padding: 10,
+    width: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    borderBottomWidth: 2,
+    borderBottomColor: '#d58500',
+    marginTop: 20
+  },
+  tracking: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   notFoundText: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -153,13 +207,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
     borderBottomWidth: 2,
-    borderBottomColor: '#004e9a',
+    borderBottomColor: '#d58500',
     marginTop: 20
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
+    marginBottom: 50
   },
   header: {
     backgroundColor: "#004e9a",
