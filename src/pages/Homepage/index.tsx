@@ -1,30 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, ToastAndroid } from 'react-native';
 import Constants from 'expo-constants';
 import braspressLogo from '../../images/braspress.png';
-import { Picker } from '@react-native-community/picker';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
+import { saveOrders, getOrders } from '../../services/StorageAPI';
+import AsyncStorage from '@react-native-community/async-storage';
+
+export interface IOrders {
+  title: string;
+  docIdentify: string;
+  numberIdentify: string;
+  typeDoc: string;
+  uuid: string;
+}
 
 function Homepage() {
 
   const { navigate } = useNavigation();
+  const [orders, setOrders] = useState<IOrders[]>([]);
 
-  const [typeDoc, setTypeDoc] = useState<string>('');
-  const [docIdentify, setDocIndentify] = useState<string>('');
-  const [numberIdentify, setNumberIdentify] = useState<string>('');
+  useEffect(() => {
+    getItems();
+  }, []);
 
-  function handleSubmit(){
-
-    if(typeDoc === '' || numberIdentify === '' || docIdentify === ''){
-      ToastAndroid.show("Preencha todos os campos", ToastAndroid.SHORT);
-    }else{
-      navigate('Tracking', { typeDoc, docIdentify, numberIdentify });
+  const getItems = async () => {
+    const orders = await getOrders();
+    if(orders){
+      setOrders(orders);
     }
-
+    console.log(orders);
   }
 
+  const handleAddTracking = () => {
+    navigate('AddTracking');
+  }
+
+  const handleTracking = ({ docIdentify, typeDoc, numberIdentify }: IOrders) => {
+    navigate('Tracking', { docIdentify, typeDoc, numberIdentify });
+  }
+
+
   return (
+    <ScrollView style={styles.scroll}>
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.topbar}>
@@ -34,46 +52,63 @@ function Homepage() {
 
      
         <View style={styles.content}>
-          <Text style={styles.titlePage}>Rastreie sua encomenda</Text>
-          <View style={styles.line} />
-          <Text style={styles.subTitle}>Preencha corretamente os campos abaixo:</Text>
-        </View>
-
-
-        <View style={styles.form}>
-          <TextInput
-          value={docIdentify}
-          onChangeText={(text) => { setDocIndentify(String(text)) }} 
-          style={styles.input} placeholder="CPF/CPNJ" />
-          <Picker
-          selectedValue={typeDoc}
-          style={styles.picker}
-          onValueChange={(typeSelected, index) => {
-            setTypeDoc(String(typeSelected));
-          }}
-          >
-            <Picker.Item value="" label="---Selecione---" />
-            <Picker.Item value="PEDIDO" label="Pedido" />
-            <Picker.Item value="CONHECIMENTO" label="Conhecimento" />
-            <Picker.Item value="NOTAFISCAL" label="Nota Fiscal" />
-          </Picker>
-          <TextInput
-          value={numberIdentify}
-          onChangeText={(text) => { setNumberIdentify(String(text)) }}
-          style={styles.input} placeholder="Número" />
           <RectButton
-          onPress={handleSubmit}
+          onPress={handleAddTracking}
           style={styles.button}>
-            <Text style={styles.buttonText}>Buscar</Text>
+            <Text style={styles.buttonText}>Adicionar Encomenda</Text>
           </RectButton>
+          <Text style={styles.titlePage}>Suas encomendas</Text>
+          <View style={styles.line} />
         </View>
-
+        <View style={styles.orders}>
+        {
+          orders.map((order) => (
+            <RectButton
+            onPress={() => { handleTracking(order) }}
+            style={styles.order} key={order.uuid}>
+              <Text style={styles.titleOrder}>{order.title}</Text>
+              <Text style={styles.titleCpnj}>CPNJ: <Text style={styles.cpnj}>{order.docIdentify}</Text></Text>
+              <Text style={styles.titleCpnj}>Número encomenda: <Text style={styles.cpnj}>{order.numberIdentify}</Text></Text>
+            </RectButton>
+          ))
+        }
+        </View>
       
     </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  cpnj: {
+    color: "#d58500",
+    fontWeight: 'bold',
+  },
+  titleCpnj: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  titleOrder: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: '#004e9a',
+    fontWeight: 'bold',
+  },
+  order: {
+    backgroundColor: "#eeeeee",
+    width: '80%',
+    padding: 10,
+    borderRadius: 8
+  },
+  orders: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -104,12 +139,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textTransform: 'uppercase',
     color: "#004e9a",
+    marginTop: 20
   },
   subTitle: {
     color: "#333",
   },
   line: {
-    marginBottom: 20,
     width: 90,
     height: 3,
     backgroundColor: "#d58500",
@@ -133,7 +168,8 @@ const styles = StyleSheet.create({
     width: 200,
     padding: 10,
     borderRadius: 8,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 30,
   },
   buttonText: {
     fontSize: 17,

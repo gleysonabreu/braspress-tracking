@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.2.1",
+    "@react-native-community/async-storage": "^1.12.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/picker": "1.6.0",
     "@react-navigation/native": "^5.7.3",
@@ -18,6 +19,7 @@
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "expo": "~38.0.8",
     "expo-constants": "^9.1.1",
+    "expo-random": "~8.2.1",
     "expo-status-bar": "^1.0.2",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
