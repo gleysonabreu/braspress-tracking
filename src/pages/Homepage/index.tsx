@@ -22,7 +22,7 @@ function Homepage() {
 
   useEffect(() => {
     getItems();
-  });
+  }, []);
 
   const getItems = async (): Promise<void> => {
     const orders = await getOrders();

@@ -35,7 +35,8 @@ function AddTracking() {
     }
 
     await saveOrders(order);
-    ToastAndroid.show("Encomenda adicionada", ToastAndroid.SHORT);    
+    ToastAndroid.show("Encomenda adicionada", ToastAndroid.SHORT);
+    navigate("Homepage");  
   }
 
   const handleBack = () => {
