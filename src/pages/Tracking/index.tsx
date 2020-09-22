@@ -14,6 +14,7 @@ function Tracking({ route, navigation }){
   const [order, setOrder] = useState<Array<string>>([]);
   const [ownerOrder, setOwnerOrder] = useState<Array<string>>([]);
   const [trackRealTime, setTrackgRealTime] = useState<ITrackingRealTime[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { navigate, goBack } = useNavigation();
 
@@ -30,6 +31,7 @@ function Tracking({ route, navigation }){
       setOrder(trackResult);
       setOwnerOrder(ownerResult);
       setTrackgRealTime(realTimeResult);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +41,7 @@ function Tracking({ route, navigation }){
     goBack();
   }
   return(
-    <ScrollView style={styles.scroll}>
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.topbar}>
@@ -52,8 +54,13 @@ function Tracking({ route, navigation }){
         </View>
       </View>
       
-      {order.length > 0 ? (
-        <View>
+      {loading ? (
+      <View style={styles.notFound}>
+        <Text style={styles.notFoundText}>Loading tracking....</Text>
+        <View style={styles.line}/>
+      </View>
+      ) : 
+      <ScrollView style={styles.scroll}>
         <View style={styles.content}>
           <Text style={styles.titlePage}>Tracking - Minhas Encomendas</Text>
           <View style={styles.line} />
@@ -125,16 +132,11 @@ function Tracking({ route, navigation }){
           ))
         }
         </View>
-      </View>
-      ) : 
-      <View style={styles.notFound}>
-        <Text style={styles.notFoundText}>Tracking not found</Text>
-        <View style={styles.line}/>
-      </View>
+        </ScrollView>
       }
 
     </View>
-    </ScrollView>
+    
   );
 }
 
@@ -160,7 +162,8 @@ const styles = StyleSheet.create({
   },
   tracking: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 50
   },
   scroll: {
     flex: 1,
@@ -214,7 +217,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
-    marginBottom: 50
   },
   header: {
     backgroundColor: "#004e9a",
