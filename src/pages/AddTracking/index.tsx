@@ -50,7 +50,7 @@ function AddTracking() {
           <RectButton
           onPress={handleBack}
           style={styles.arrowBack}>
-            <Ionicons name="md-arrow-back" size={40} color="#d58500" />
+            <Ionicons name="ios-arrow-back" size={40} color="#d58500" />
           </RectButton>
           <Image style={styles.logo} source={braspressLogo} />
         </View>
