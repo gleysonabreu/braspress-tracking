@@ -22,14 +22,13 @@ function Homepage() {
 
   useEffect(() => {
     getItems();
-  }, []);
+  });
 
-  const getItems = async () => {
+  const getItems = async (): Promise<void> => {
     const orders = await getOrders();
     if(orders){
       setOrders(orders);
     }
-    console.log(orders);
   }
 
   const handleAddTracking = () => {
@@ -98,7 +97,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#eeeeee",
     width: '80%',
     padding: 10,
-    borderRadius: 8
+    borderRadius: 8,
+    marginTop: 20
   },
   orders: {
     alignItems: 'center',
@@ -107,12 +107,13 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
+    marginBottom: 50
   },
   header: {
     backgroundColor: "#004e9a",

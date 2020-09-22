@@ -12,7 +12,7 @@ import * as Random from 'expo-random';
 
 function AddTracking() {
 
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
   const [typeDoc, setTypeDoc] = useState<string>('');
   const [docIdentify, setDocIndentify] = useState<string>('');
@@ -35,8 +35,7 @@ function AddTracking() {
     }
 
     await saveOrders(order);
-    ToastAndroid.show("Encomenda adicionada", ToastAndroid.SHORT);
-    
+    ToastAndroid.show("Encomenda adicionada", ToastAndroid.SHORT);    
   }
 
   const handleBack = () => {
