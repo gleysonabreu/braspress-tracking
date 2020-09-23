@@ -22,12 +22,14 @@ function Homepage() {
 
   useEffect(() => {
     getItems();
-  }, []);
+  });
 
   const getItems = async (): Promise<void> => {
     const orders = await getOrders();
     if(orders){
       setOrders(orders);
+    }else{
+      setOrders([]);
     }
   }
 
