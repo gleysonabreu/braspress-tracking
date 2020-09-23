@@ -4,8 +4,9 @@ import Constants from 'expo-constants';
 import braspressLogo from '../../images/braspress.png';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-import { saveOrders, getOrders } from '../../services/StorageAPI';
+import { saveOrders, getOrders, removeOrder } from '../../services/StorageAPI';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Ionicons } from '@expo/vector-icons';
 
 export interface IOrders {
   title: string;
@@ -67,7 +68,14 @@ function Homepage() {
             <RectButton
             onPress={() => { handleTracking(order) }}
             style={styles.order} key={order.uuid}>
-              <Text style={styles.titleOrder}>{order.title}</Text>
+              <View style={styles.orderHeader}>
+                <Text style={styles.titleOrder}>{order.title}</Text>
+                <RectButton
+                onPress={() => removeOrder(order.uuid)}
+                >
+                  <Ionicons name="ios-close" size={35} color="#c02d2e" />
+                </RectButton>
+              </View>
               <Text style={styles.titleCpnj}>CPNJ: <Text style={styles.cpnj}>{order.docIdentify}</Text></Text>
               <Text style={styles.titleCpnj}>Número encomenda: <Text style={styles.cpnj}>{order.numberIdentify}</Text></Text>
             </RectButton>
@@ -81,6 +89,12 @@ function Homepage() {
 }
 
 const styles = StyleSheet.create({
+  orderHeader: {
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 5,
+  },
   cpnj: {
     color: "#d58500",
     fontWeight: 'bold',
@@ -94,6 +108,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#004e9a',
     fontWeight: 'bold',
+    flex: 1,
   },
   order: {
     backgroundColor: "#eeeeee",

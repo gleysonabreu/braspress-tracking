@@ -24,4 +24,11 @@ const getOrders = async () => {
   }
 }
 
-export { saveOrders, getOrders };
+const removeOrder = async (uuid: string) => {
+  const orders = await getOrders();
+  let removedOrders;
+  if(orders) removedOrders = orders.filter(item => item.uuid !== uuid);
+  await AsyncStorage.setItem("@orders", JSON.stringify(removedOrders));
+}
+
+export { saveOrders, getOrders, removeOrder };
