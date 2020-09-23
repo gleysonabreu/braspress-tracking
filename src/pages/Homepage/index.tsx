@@ -44,7 +44,7 @@ function Homepage() {
 
 
   return (
-    <ScrollView style={styles.scroll}>
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.topbar}>
@@ -62,6 +62,7 @@ function Homepage() {
           <Text style={styles.titlePage}>Suas encomendas</Text>
           <View style={styles.line} />
         </View>
+        <ScrollView style={styles.scroll}>
         <View style={styles.orders}>
         {
           orders.map((order) => (
@@ -82,9 +83,9 @@ function Homepage() {
           ))
         }
         </View>
-      
+        </ScrollView>
     </View>
-    </ScrollView>
+    
   );
 }
 
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
+    marginBottom: 50
   },
   scroll: {
     flex: 1,
@@ -130,7 +132,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
-    marginBottom: 50
   },
   header: {
     backgroundColor: "#004e9a",
