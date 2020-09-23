@@ -2,16 +2,29 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const { Navigator, Screen } = createStackNavigator();
-
 import Homepage from '../pages/Homepage';
 import Tracking from '../pages/Tracking';
 import AddTracking from '../pages/AddTracking';
 
-function AppStack(){
-  return(
+export type RootStackParamList = {
+  Homepage: undefined;
+  AddTracking: undefined;
+  Tracking: {
+    typeDoc: string;
+    docIdentify: string;
+    numberIdentify: string;
+  };
+};
+
+const { Navigator, Screen } = createStackNavigator<RootStackParamList>();
+
+function AppStack() {
+  return (
     <NavigationContainer>
-      <Navigator screenOptions={{ headerShown: false }}>
+      <Navigator
+        initialRouteName="Homepage"
+        screenOptions={{ headerShown: false }}
+      >
         <Screen name="Homepage" component={Homepage} />
         <Screen name="AddTracking" component={AddTracking} />
         <Screen name="Tracking" component={Tracking} />
