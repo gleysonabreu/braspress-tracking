@@ -13,6 +13,7 @@ import {
 import { RootStackParamList } from '../../routes';
 import PageHeader from '../../components/PageHeader';
 import styles from './styles';
+import Tiles from '../../components/Tiles';
 
 type TrackingScreenRouteProp = RouteProp<RootStackParamList, 'Tracking'>;
 
@@ -73,18 +74,16 @@ function Tracking() {
             <Text style={styles.infoText}>{ownerOrder[1]}</Text>
           </View>
 
-          <View style={styles.order}>
-            <View style={styles.orderInfo}>
-              {order.map(item => (
-                <View key={item.name} style={styles.itemOrder}>
-                  <Text style={styles.orderTitle}>{item.name}: </Text>
-                  <Text style={styles.orderTextInfo}>
-                    {item.data ? item.data : 'Pendente'}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
+          <Tiles>
+            {order.map(item => (
+              <View key={item.name} style={styles.itemOrder}>
+                <Text style={styles.orderTitle}>{item.name}: </Text>
+                <Text style={styles.orderTextInfo}>
+                  {item.data ? item.data : 'Pendente'}
+                </Text>
+              </View>
+            ))}
+          </Tiles>
 
           <View style={styles.tracking}>
             <View style={styles.content}>
@@ -92,7 +91,7 @@ function Tracking() {
               <View style={styles.line} />
             </View>
             {trackRealTime.map(item => (
-              <View style={styles.track} key={item.name}>
+              <Tiles key={item.name}>
                 <Text style={styles.titleRealTime}>{item.name}</Text>
                 <Text style={styles.subTitleRealTime}>
                   {item.date ? item.date : 'Não concluído.'}
@@ -105,7 +104,7 @@ function Tracking() {
                 ) : (
                   <Ionicons name="ios-close" color="#c02d2e" size={40} />
                 )}
-              </View>
+              </Tiles>
             ))}
           </View>
         </ScrollView>
