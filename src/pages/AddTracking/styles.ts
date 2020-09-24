@@ -2,27 +2,10 @@ import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 
 const styles = StyleSheet.create({
-  arrowBack: {
-    alignItems: 'flex-start',
-    marginLeft: 20,
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
-  },
-  header: {
-    backgroundColor: '#004e9a',
-    width: '100%',
-  },
-  topbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 93,
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
   },
   content: {
     alignItems: 'center',

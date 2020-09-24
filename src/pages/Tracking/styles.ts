@@ -79,23 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
   },
-  header: {
-    backgroundColor: '#004e9a',
-    width: '100%',
-  },
-  arrowBack: {
-    alignItems: 'flex-start',
-    marginLeft: 20,
-  },
-  topbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 93,
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
-  },
   content: {
     alignItems: 'center',
     justifyContent: 'center',

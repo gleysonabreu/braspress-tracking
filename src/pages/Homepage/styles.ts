@@ -1,14 +1,15 @@
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+
 const styles = StyleSheet.create({
   orderHeader: {
-    flexDirection: "row",
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 5,
   },
   cpnj: {
-    color: "#d58500",
+    color: '#d58500',
     fontWeight: 'bold',
   },
   titleCpnj: {
@@ -23,17 +24,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   order: {
-    backgroundColor: "#eeeeee",
+    backgroundColor: '#eeeeee',
     width: '80%',
     padding: 10,
     borderRadius: 8,
-    marginTop: 20
+    marginTop: 20,
   },
   orders: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 30,
-    marginBottom: 50
+    marginBottom: 50,
   },
   scroll: {
     flex: 1,
@@ -44,23 +45,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: Constants.statusBarHeight,
   },
-  header: {
-    backgroundColor: "#004e9a",
-    width: "100%", 
-  },
-  topbar: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 93,
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: "100%",
-  },
   content: {
-    alignItems: "center",
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   titlePage: {
     textAlign: 'center',
@@ -68,16 +55,16 @@ const styles = StyleSheet.create({
     padding: 20,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    color: "#004e9a",
-    marginTop: 20
+    color: '#004e9a',
+    marginTop: 20,
   },
   subTitle: {
-    color: "#333",
+    color: '#333',
   },
   line: {
     width: 90,
     height: 3,
-    backgroundColor: "#d58500",
+    backgroundColor: '#d58500',
   },
   form: {
     justifyContent: 'center',
@@ -103,12 +90,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 17,
-    color: "#FFF"
+    color: '#FFF',
   },
   picker: {
     width: 200,
     padding: 10,
-  }
+  },
 });
 
 export default styles;

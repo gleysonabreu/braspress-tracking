@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getOrders, removeOrder } from '../../services/StorageAPI';
 import braspressLogo from '../../images/braspress.png';
 import styles from './styles';
+import PageHeader from '../../components/PageHeader';
 
 export interface IOrders {
   title: string;
@@ -46,11 +47,7 @@ function Homepage() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.topbar}>
-          <Image style={styles.logo} source={braspressLogo} />
-        </View>
-      </View>
+      <PageHeader arrowBack={false} />
 
       <View style={styles.content}>
         <RectButton onPress={handleAddTracking} style={styles.button}>

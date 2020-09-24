@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Text, View, ScrollView } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import Axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
 import {
   track,
   orderOwner,
   trackingRealTime,
   ITrackingRealTime,
 } from '../../services/BraspressAPI';
-import braspressLogo from '../../images/braspress.png';
 import { RootStackParamList } from '../../routes';
+import PageHeader from '../../components/PageHeader';
 import styles from './styles';
 
 type TrackingScreenRouteProp = RouteProp<RootStackParamList, 'Tracking'>;
@@ -24,8 +23,6 @@ function Tracking() {
   const [ownerOrder, setOwnerOrder] = useState<Array<string>>([]);
   const [trackRealTime, setTrackgRealTime] = useState<ITrackingRealTime[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const { goBack } = useNavigation();
 
   useEffect(() => {
     tracking();
@@ -48,19 +45,9 @@ function Tracking() {
     }
   };
 
-  function handleBack() {
-    goBack();
-  }
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.topbar}>
-          <RectButton onPress={handleBack} style={styles.arrowBack}>
-            <Ionicons name="ios-arrow-back" size={40} color="#d58500" />
-          </RectButton>
-          <Image style={styles.logo} source={braspressLogo} />
-        </View>
-      </View>
+      <PageHeader arrowBack />
 
       {loading ? (
         <View style={styles.notFound}>

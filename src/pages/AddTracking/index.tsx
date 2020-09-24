@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Text, View, Image, TextInput, ToastAndroid } from 'react-native';
+import { Text, View, TextInput, ToastAndroid } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
 import { saveOrders } from '../../services/StorageAPI';
 import { IOrders } from '../Homepage';
-import braspressLogo from '../../images/braspress.png';
 import styles from './styles';
+import PageHeader from '../../components/PageHeader';
 
 function AddTracking() {
-  const { goBack, navigate } = useNavigation();
+  const { navigate } = useNavigation();
 
   const [typeDoc, setTypeDoc] = useState<string>('');
   const [docIdentify, setDocIndentify] = useState<string>('');
@@ -41,20 +40,9 @@ function AddTracking() {
     navigate('Homepage');
   }
 
-  const handleBack = () => {
-    goBack();
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.topbar}>
-          <RectButton onPress={handleBack} style={styles.arrowBack}>
-            <Ionicons name="ios-arrow-back" size={40} color="#d58500" />
-          </RectButton>
-          <Image style={styles.logo} source={braspressLogo} />
-        </View>
-      </View>
+      <PageHeader arrowBack />
 
       <View style={styles.content}>
         <Text style={styles.titlePage}>Adicionar encomenda</Text>
