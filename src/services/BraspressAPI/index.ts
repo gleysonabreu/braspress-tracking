@@ -7,23 +7,34 @@ interface ITrackingRealTime {
 
 const track = (htmlString: string) => {
   const $ = cio.load(htmlString);
-  const nodesFirstTable = $('.col-xs-4.col-xs-offset-7').find(
-    '.table tbody > tr > td',
+  const nodesNameTable = $('.col-xs-offset-1.col-xs-10.table-responsive').find(
+    '.table > thead > tr > th',
   );
-  const nodesSecondTable = $(
-    '.col-xs-offset-1.col-xs-10.table-responsive',
-  ).find('.table tbody > tr > td');
-  const arrayInfos: Array<string> = [];
-
-  nodesFirstTable.each((index, node) => {
-    const items = $(node);
-    if (index === 0) arrayInfos.push(items.text());
+  const nodesDataTable = $('.col-xs-offset-1.col-xs-10.table-responsive').find(
+    '.table > tbody > tr > td',
+  );
+  const arrayNameTable: Array<string> = [];
+  const arrayDataTable: Array<string> = [];
+  nodesNameTable.each((_index, nodeName) => {
+    arrayNameTable.push($(nodeName).text().trim());
   });
-
-  nodesSecondTable.each((index, node) => {
-    const items = $(node);
-    if (index !== 8) arrayInfos.push(items.text());
+  nodesDataTable.each((_index, nodeData) => {
+    arrayDataTable.push($(nodeData).text().trim());
   });
+  const numNames = arrayNameTable.length;
+  const arrayInfos: Array<{
+    name: string;
+    data: string;
+  }> = [];
+
+  for (let x: number = 0; x < numNames; x += 1) {
+    const dataInfos = {
+      name: arrayNameTable[x],
+      data: arrayDataTable[x],
+    };
+
+    arrayInfos.push(dataInfos);
+  }
 
   return arrayInfos;
 };
