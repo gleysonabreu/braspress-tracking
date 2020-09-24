@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { getOrders, removeOrder } from '../../services/StorageAPI';
-import braspressLogo from '../../images/braspress.png';
 import styles from './styles';
 import PageHeader from '../../components/PageHeader';
 
