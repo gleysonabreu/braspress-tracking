@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   order: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   orderInfo: {
     backgroundColor: '#e8e8e8',
