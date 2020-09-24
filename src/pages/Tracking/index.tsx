@@ -44,7 +44,6 @@ function Tracking() {
       const ownerResult = orderOwner(response.data);
       const realTimeResult = trackingRealTime(response.data);
       setOrder(trackResult);
-      console.log(ownerResult);
       setOwnerOrder(ownerResult);
       setTrackgRealTime(realTimeResult);
       setLoading(false);
