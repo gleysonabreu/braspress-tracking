@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, ToastAndroid } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { saveOrders } from '../../services/StorageAPI';
 import { IOrders } from '../Homepage';
-import styles from './styles';
+import {
+  Container,
+  Line,
+  MessageContainer,
+  TitleMessage,
+  NewTrack,
+  FormTrack,
+  InputForm,
+  TitleButton,
+} from './styles';
 import PageHeader from '../../components/PageHeader';
 
 function AddTracking() {
@@ -41,60 +50,64 @@ function AddTracking() {
   }
 
   return (
-    <View style={styles.container}>
+    <Container>
       <PageHeader arrowBack />
+      <MessageContainer>
+        <TitleMessage>Adicionar encomenda.</TitleMessage>
+        <Line />
+      </MessageContainer>
 
-      <View style={styles.content}>
-        <Text style={styles.titlePage}>Adicionar encomenda</Text>
-        <View style={styles.line} />
-        <Text style={styles.subTitle}>
-          Preencha corretamente os campos abaixo:
-        </Text>
-      </View>
-
-      <View style={styles.form}>
-        <TextInput
-          value={titleOrder}
-          onChangeText={text => {
-            setTitleOrder(text);
-          }}
-          style={styles.input}
-          placeholder="Titulo da encomenda"
-        />
-
-        <TextInput
-          value={docIdentify}
-          onChangeText={text => {
-            setDocIndentify(String(text));
-          }}
-          style={styles.input}
-          placeholder="CPF/CPNJ"
-        />
-        <Picker
-          selectedValue={typeDoc}
-          style={styles.picker}
-          onValueChange={(typeSelected, _index) => {
-            setTypeDoc(String(typeSelected));
-          }}
-        >
-          <Picker.Item value="" label="---Selecione---" />
-          <Picker.Item value="PEDIDO" label="Pedido" />
-          <Picker.Item value="CONHECIMENTO" label="Conhecimento" />
-          <Picker.Item value="NOTAFISCAL" label="Nota Fiscal" />
-        </Picker>
-        <TextInput
-          value={numberIdentify}
-          onChangeText={text => {
-            setNumberIdentify(String(text));
-          }}
-          style={styles.input}
-          placeholder="Número"
-        />
-        <RectButton onPress={handleSubmit} style={styles.button}>
-          <Text style={styles.buttonText}>Adicionar</Text>
-        </RectButton>
-      </View>
-    </View>
+      <NewTrack>
+        <FormTrack>
+          <InputForm
+            value={titleOrder}
+            onChangeText={(text: string) => {
+              setTitleOrder(text);
+            }}
+            placeholder="Titulo da encomenda"
+          />
+          <InputForm
+            value={docIdentify}
+            onChangeText={(text: string) => {
+              setDocIndentify(text);
+            }}
+            placeholder="CPF/CPNJ"
+          />
+          <Picker
+            style={{ width: 200 }}
+            selectedValue={typeDoc}
+            onValueChange={(typeSelected, _index) => {
+              setTypeDoc(String(typeSelected));
+            }}
+          >
+            <Picker.Item value="" label="---Selecione---" />
+            <Picker.Item value="PEDIDO" label="Pedido" />
+            <Picker.Item value="CONHECIMENTO" label="Conhecimento" />
+            <Picker.Item value="NOTAFISCAL" label="Nota Fiscal" />
+          </Picker>
+          <InputForm
+            value={numberIdentify}
+            onChangeText={(text: string) => {
+              setNumberIdentify(text);
+            }}
+            placeholder="Número"
+          />
+          <RectButton
+            onPress={handleSubmit}
+            style={{
+              backgroundColor: '#d58500',
+              width: 250,
+              padding: 13,
+              borderRadius: 8,
+              marginTop: 10,
+              alignItems: 'center',
+            }}
+          >
+            <TitleButton>Adicionar</TitleButton>
+          </RectButton>
+        </FormTrack>
+      </NewTrack>
+    </Container>
   );
 }
 
