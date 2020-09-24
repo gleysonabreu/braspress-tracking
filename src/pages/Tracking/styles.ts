@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   subTitleRealTime: {
     fontWeight: 'bold',
     color: '#d58500',
+    textAlign: 'center',
   },
   titleRealTime: {
     fontSize: 16,
@@ -45,6 +46,11 @@ const styles = StyleSheet.create({
   infoOwnerOrder: {
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+  },
+  infoText: {
+    textAlign: 'center',
+    width: '80%',
   },
   orderTitle: {
     fontSize: 15,

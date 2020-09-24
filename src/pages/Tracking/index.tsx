@@ -19,7 +19,12 @@ function Tracking() {
   const { docIdentify, numberIdentify, typeDoc } = useRoute<
     TrackingScreenRouteProp
   >().params;
-  const [order, setOrder] = useState<Array<string>>([]);
+  const [order, setOrder] = useState<
+    Array<{
+      name: string;
+      data: string;
+    }>
+  >([]);
   const [ownerOrder, setOwnerOrder] = useState<Array<string>>([]);
   const [trackRealTime, setTrackgRealTime] = useState<ITrackingRealTime[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,6 +42,7 @@ function Tracking() {
       const ownerResult = orderOwner(response.data);
       const realTimeResult = trackingRealTime(response.data);
       setOrder(trackResult);
+      console.log(ownerResult);
       setOwnerOrder(ownerResult);
       setTrackgRealTime(realTimeResult);
       setLoading(false);
@@ -62,51 +68,20 @@ function Tracking() {
           </View>
 
           <View style={styles.infoOwnerOrder}>
-            <Text>{ownerOrder[0]}</Text>
-            <Text>{ownerOrder[1]}</Text>
+            <Text style={styles.infoText}>{ownerOrder[0]}</Text>
+            <Text style={styles.infoText}>{ownerOrder[1]}</Text>
           </View>
 
           <View style={styles.order}>
             <View style={styles.orderInfo}>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Previsão de entrega: </Text>
-                <Text style={styles.orderTextInfo}>{order[0]}</Text>
-              </View>
-            </View>
-
-            <View style={styles.orderInfo}>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Nota Fiscal: </Text>
-                <Text style={styles.orderTextInfo}>{order[1]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Pedido: </Text>
-                <Text style={styles.orderTextInfo}>{order[2]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Nº do Conhecimento: </Text>
-                <Text style={styles.orderTextInfo}>{order[3]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Data Emissão: </Text>
-                <Text style={styles.orderTextInfo}>{order[4]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Previsão de Entrega: </Text>
-                <Text style={styles.orderTextInfo}>{order[0]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Origem: </Text>
-                <Text style={styles.orderTextInfo}>{order[6]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Filial de destino: </Text>
-                <Text style={styles.orderTextInfo}>{order[7]}</Text>
-              </View>
-              <View style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>Volumes: </Text>
-                <Text style={styles.orderTextInfo}>{order[8]}</Text>
-              </View>
+              {order.map(item => (
+                <View key={item.name} style={styles.itemOrder}>
+                  <Text style={styles.orderTitle}>{item.name}: </Text>
+                  <Text style={styles.orderTextInfo}>
+                    {item.data ? item.data : 'Pendente'}
+                  </Text>
+                </View>
+              ))}
             </View>
           </View>
 
