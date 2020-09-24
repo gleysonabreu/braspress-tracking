@@ -4,7 +4,7 @@ import { View, Image } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import braspressLogo from '../../images/braspress.png';
-import styles from './styles';
+import { styles } from './styles';
 
 type PageHeaderProps = {
   arrowBack?: boolean;
