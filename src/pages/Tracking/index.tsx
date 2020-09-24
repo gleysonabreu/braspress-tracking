@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -96,7 +97,10 @@ function Tracking() {
                 <Text style={styles.subTitleRealTime}>
                   {item.date ? item.date : 'Não concluído.'}
                 </Text>
-                {item.date ? (
+
+                {item.date && item.date.includes('Aguardando desembarque') ? (
+                  <Ionicons name="ios-hourglass" color="#004e9a" size={30} />
+                ) : item.date ? (
                   <Ionicons name="ios-checkmark" color="#48a868" size={40} />
                 ) : (
                   <Ionicons name="ios-close" color="#c02d2e" size={40} />
