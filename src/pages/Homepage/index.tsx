@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import { getOrders, removeOrder } from '../../services/StorageAPI';
-import styles from './styles';
+import { getOrders } from '../../services/StorageAPI';
+import {
+  Container,
+  MessageContainer,
+  TitleMessage,
+  Line,
+  Scroll,
+  Delivaries,
+} from './styles';
 import PageHeader from '../../components/PageHeader';
+import TrackHome from '../../components/TrackHome';
 
 export interface IOrders {
   title: string;
@@ -17,7 +24,7 @@ export interface IOrders {
 
 function Homepage() {
   const { navigate } = useNavigation();
-  const [orders, setOrders] = useState<IOrders[]>([]);
+  const [delivaries, setDelivaries] = useState<IOrders[]>([]);
 
   useEffect(() => {
     getItems();
@@ -26,9 +33,9 @@ function Homepage() {
   const getItems = async (): Promise<void> => {
     const ordersStorage = await getOrders();
     if (ordersStorage) {
-      setOrders(ordersStorage);
+      setDelivaries(ordersStorage);
     } else {
-      setOrders([]);
+      setDelivaries([]);
     }
   };
 
@@ -36,53 +43,34 @@ function Homepage() {
     navigate('AddTracking');
   };
 
-  const handleTracking = ({
-    docIdentify,
-    typeDoc,
-    numberIdentify,
-  }: IOrders) => {
-    navigate('Tracking', { docIdentify, typeDoc, numberIdentify });
-  };
-
   return (
-    <View style={styles.container}>
-      <PageHeader arrowBack={false} />
-
-      <View style={styles.content}>
-        <RectButton onPress={handleAddTracking} style={styles.button}>
-          <Text style={styles.buttonText}>Adicionar Encomenda</Text>
+    <Container>
+      <PageHeader>
+        <RectButton
+          onPress={handleAddTracking}
+          style={{
+            backgroundColor: '#004e9a',
+            borderRadius: 50,
+            width: 50,
+            alignItems: 'center',
+          }}
+        >
+          <Ionicons name="ios-add" size={40} color="#d58500" />
         </RectButton>
-        <Text style={styles.titlePage}>Suas encomendas</Text>
-        <View style={styles.line} />
-      </View>
-      <ScrollView style={styles.scroll}>
-        <View style={styles.orders}>
-          {orders.map(order => (
-            <RectButton
-              onPress={() => {
-                handleTracking(order);
-              }}
-              style={styles.order}
-              key={order.uuid}
-            >
-              <View style={styles.orderHeader}>
-                <Text style={styles.titleOrder}>{order.title}</Text>
-                <RectButton onPress={() => removeOrder(order.uuid)}>
-                  <Ionicons name="ios-close" size={35} color="#c02d2e" />
-                </RectButton>
-              </View>
-              <Text style={styles.titleCpnj}>
-                CPNJ: <Text style={styles.cpnj}>{order.docIdentify}</Text>
-              </Text>
-              <Text style={styles.titleCpnj}>
-                <Text>Número encomenda:</Text>
-                <Text style={styles.cpnj}>{order.numberIdentify}</Text>
-              </Text>
-            </RectButton>
+      </PageHeader>
+      <MessageContainer>
+        <TitleMessage>Suas encomendas.</TitleMessage>
+        <Line />
+      </MessageContainer>
+
+      <Scroll>
+        <Delivaries>
+          {delivaries.map(delivary => (
+            <TrackHome key={delivary.uuid} infosDelivary={delivary} />
           ))}
-        </View>
-      </ScrollView>
-    </View>
+        </Delivaries>
+      </Scroll>
+    </Container>
   );
 }
 

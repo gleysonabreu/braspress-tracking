@@ -1,24 +1,24 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-export const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#004e9a',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  topbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 93,
-  },
-  arrowBack: {
-    alignItems: 'flex-start',
-    marginLeft: 20,
-  },
-  logo: {
-    resizeMode: 'contain',
-    height: '100%',
-    flex: 1,
-  },
-});
+export const Header = styled.View`
+  background-color: #ffffff;
+  height: 80px;
+  width: 100%;
+`;
+
+export const TitleHeader = styled.Text`
+  flex: 1;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+`;
+
+export const TopBar = styled.View`
+  flex-direction: row;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 10px;
+`;

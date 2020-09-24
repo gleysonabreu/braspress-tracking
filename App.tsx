@@ -5,8 +5,8 @@ import AppStack from './src/routes';
 export default function App() {
   return (
     <>
-    <StatusBar style="light" backgroundColor="#003e7b" />
-    <AppStack />
+      <StatusBar style="auto" backgroundColor="#ccc" />
+      <AppStack />
     </>
   );
 }

@@ -1,101 +1,38 @@
 import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  orderHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 5,
-  },
-  cpnj: {
-    color: '#d58500',
-    fontWeight: 'bold',
-  },
-  titleCpnj: {
-    fontSize: 15,
-    textAlign: 'center',
-  },
-  titleOrder: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#004e9a',
-    fontWeight: 'bold',
-    flex: 1,
-  },
-  order: {
-    backgroundColor: '#eeeeee',
-    width: '80%',
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  orders: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
-    marginBottom: 50,
-  },
-  scroll: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
-  },
-  content: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titlePage: {
-    textAlign: 'center',
-    fontSize: 20,
-    padding: 20,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    color: '#004e9a',
-    marginTop: 20,
-  },
-  subTitle: {
-    color: '#333',
-  },
-  line: {
-    width: 90,
-    height: 3,
-    backgroundColor: '#d58500',
-  },
-  form: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    flex: 1,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    width: 200,
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#D58500',
-    width: 200,
-    padding: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  buttonText: {
-    fontSize: 17,
-    color: '#FFF',
-  },
-  picker: {
-    width: 200,
-    padding: 10,
-  },
-});
+export const Container = styled.View`
+  flex: 1;
+  background: #fff;
+  padding-top: ${Constants.statusBarHeight}px;
+`;
 
-export default styles;
+export const MessageContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TitleMessage = styled.Text`
+  font-size: 25px;
+  color: #004e9a;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+export const Line = styled.View`
+  width: 100px;
+  height: 3px;
+  background: #d58500;
+`;
+
+export const Scroll = styled.ScrollView`
+  flex: 1;
+`;
+
+export const Delivaries = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 50px;
+`;
