@@ -105,7 +105,7 @@ function Tracking() {
             </MessageContainer>
 
             {trackRealTime.map(item => (
-              <Delivary>
+              <Delivary key={item.name}>
                 <DelivaryTitle>{item.name}</DelivaryTitle>
                 <DelivarySubTitle>
                   {item.date ? item.date : 'Não concluído.'}
