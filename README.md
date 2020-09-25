@@ -22,7 +22,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## :house: Front-end
 
 <h1 align="center">
-    <img alt="VIDEO APP" src="https://i.imgur.com/C9XnpHo.gif" />
+[Imgur](https://imgur.com/gJZ6YQV)
+    <img alt="VIDEO APP" src="https://i.imgur.com/gJZ6YQV.gif" />
 </h1>
 <h1 align="center">
     <img alt="HOMEPAGE" src="https://i.imgur.com/vkPD3vN.jpg" />
