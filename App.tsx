@@ -5,7 +5,7 @@ import AppStack from './src/routes';
 export default function App() {
   return (
     <>
-      <StatusBar style="auto" backgroundColor="#ccc" />
+      <StatusBar style="dark" backgroundColor="#fff" />
       <AppStack />
     </>
   );
