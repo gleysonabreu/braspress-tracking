@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import Axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,8 +12,23 @@ import {
 } from '../../services/BraspressAPI';
 import { RootStackParamList } from '../../routes';
 import PageHeader from '../../components/PageHeader';
-import styles from './styles';
-import Tiles from '../../components/Tiles';
+import {
+  Container,
+  Line,
+  MessageContainer,
+  Scroll,
+  TitleMessage,
+  OwnerInfo,
+  OwnerText,
+  Delivaries,
+  Delivary,
+  DelivaryInfoName,
+  DelivaryInfoData,
+  DelivaryInfo,
+  DelivaryTitle,
+  DelivarySubTitle,
+  NotFound,
+} from './styles';
 
 type TrackingScreenRouteProp = RouteProp<RootStackParamList, 'Tracking'>;
 
@@ -53,62 +68,62 @@ function Tracking() {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <PageHeader arrowBack />
-
       {loading ? (
-        <View style={styles.notFound}>
-          <Text style={styles.notFoundText}>Loading tracking....</Text>
-          <View style={styles.line} />
-        </View>
+        <NotFound>
+          <TitleMessage>Loading..</TitleMessage>
+          <Line />
+        </NotFound>
       ) : (
-        <ScrollView style={styles.scroll}>
-          <View style={styles.content}>
-            <Text style={styles.titlePage}>Tracking - Minhas Encomendas</Text>
-            <View style={styles.line} />
-          </View>
+        <Scroll>
+          <MessageContainer>
+            <TitleMessage>Tracking - Minhas encomendas</TitleMessage>
+            <Line />
+          </MessageContainer>
 
-          <View style={styles.infoOwnerOrder}>
-            <Text style={styles.infoText}>{ownerOrder[0]}</Text>
-            <Text style={styles.infoText}>{ownerOrder[1]}</Text>
-          </View>
+          <OwnerInfo>
+            <OwnerText>{ownerOrder[0]}</OwnerText>
+            <OwnerText>{ownerOrder[1]}</OwnerText>
+          </OwnerInfo>
 
-          <Tiles>
-            {order.map(item => (
-              <View key={item.name} style={styles.itemOrder}>
-                <Text style={styles.orderTitle}>{item.name}: </Text>
-                <Text style={styles.orderTextInfo}>
-                  {item.data ? item.data : 'Pendente'}
-                </Text>
-              </View>
-            ))}
-          </Tiles>
+          <Delivaries>
+            <Delivary>
+              {order.map(item => (
+                <DelivaryInfo>
+                  <DelivaryInfoName>{item.name}: </DelivaryInfoName>
+                  <DelivaryInfoData>
+                    {item.data ? item.data : 'Pendente'}
+                  </DelivaryInfoData>
+                </DelivaryInfo>
+              ))}
+            </Delivary>
 
-          <View style={styles.tracking}>
-            <View style={styles.content}>
-              <Text style={styles.titlePage}>Tracking</Text>
-              <View style={styles.line} />
-            </View>
+            <MessageContainer>
+              <TitleMessage>Track</TitleMessage>
+              <Line />
+            </MessageContainer>
+
             {trackRealTime.map(item => (
-              <Tiles key={item.name}>
-                <Text style={styles.titleRealTime}>{item.name}</Text>
-                <Text style={styles.subTitleRealTime}>
+              <Delivary>
+                <DelivaryTitle>{item.name}</DelivaryTitle>
+                <DelivarySubTitle>
                   {item.date ? item.date : 'Não concluído.'}
-                </Text>
-
-                {item.date && item.date.includes('Aguardando desembarque') ? (
-                  <Ionicons name="ios-hourglass" color="#004e9a" size={30} />
+                </DelivarySubTitle>
+                {(item.date && item.date.includes('Aguardando desembarque')) ||
+                item.date.includes('Preparando volumes') ? (
+                  <Ionicons name="ios-albums" color="#004e9a" size={30} />
                 ) : item.date ? (
                   <Ionicons name="ios-checkmark" color="#48a868" size={40} />
                 ) : (
                   <Ionicons name="ios-close" color="#c02d2e" size={40} />
                 )}
-              </Tiles>
+              </Delivary>
             ))}
-          </View>
-        </ScrollView>
+          </Delivaries>
+        </Scroll>
       )}
-    </View>
+    </Container>
   );
 }
 
