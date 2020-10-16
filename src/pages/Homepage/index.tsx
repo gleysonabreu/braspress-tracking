@@ -27,11 +27,11 @@ function Homepage() {
   const { navigate } = useNavigation();
   const [delivaries, setDelivaries] = useState<IOrders[]>([]);
 
-  useFocusEffect(() => {
+  useFocusEffect(
     useCallback(() => {
       getItems();
-    }, []);
-  });
+    }, []),
+  );
 
   const getItems = async (): Promise<void> => {
     const ordersStorage = await getOrders();
