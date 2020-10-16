@@ -23,7 +23,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.gleysonabreu.braspresstracking"
+      "package": "com.gleysonabreu.braspresstracking",
+      "useNextNotificationsApi": true
     }
   }
 }

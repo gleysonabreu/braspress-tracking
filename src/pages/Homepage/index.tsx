@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useCallback } from 'react';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { getOrders } from '../../services/StorageAPI';
+
 import {
   Container,
   MessageContainer,
@@ -26,8 +27,10 @@ function Homepage() {
   const { navigate } = useNavigation();
   const [delivaries, setDelivaries] = useState<IOrders[]>([]);
 
-  useEffect(() => {
-    getItems();
+  useFocusEffect(() => {
+    useCallback(() => {
+      getItems();
+    }, []);
   });
 
   const getItems = async (): Promise<void> => {
