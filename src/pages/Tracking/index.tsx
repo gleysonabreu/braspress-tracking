@@ -1,12 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import Axios from 'axios';
 import { Ionicons } from '@expo/vector-icons';
 import {
   track,
-  orderOwner,
+  trackError,
   trackingRealTime,
   ITrackingRealTime,
 } from '../../services/BraspressAPI';
@@ -18,15 +17,13 @@ import {
   MessageContainer,
   Scroll,
   TitleMessage,
-  OwnerInfo,
-  OwnerText,
-  Delivaries,
-  Delivary,
-  DelivaryInfoName,
-  DelivaryInfoData,
-  DelivaryInfo,
-  DelivaryTitle,
-  DelivarySubTitle,
+  Deliveries,
+  Delivery,
+  DeliveryInfoName,
+  DeliveryInfoData,
+  DeliveryInfo,
+  DeliveryTitle,
+  DeliverySubTitle,
   NotFound,
 } from './styles';
 
@@ -42,9 +39,9 @@ function Tracking() {
       data: string;
     }>
   >([]);
-  const [ownerOrder, setOwnerOrder] = useState<Array<string>>([]);
-  const [trackRealTime, setTrackgRealTime] = useState<ITrackingRealTime[]>([]);
+  const [trackRealTime, setTrackRealTime] = useState<ITrackingRealTime[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorTrack, setErrorTrack] = useState<boolean>(false);
 
   useEffect(() => {
     tracking();
@@ -56,12 +53,20 @@ function Tracking() {
         `https://blue.braspress.com/site/w/tracking/search?cnpj=${docIdentify}&documentType=${typeDoc}&numero=${numberIdentify}&isSite=true`,
       );
       const trackResult = track(response.data);
-      const ownerResult = orderOwner(response.data);
       const realTimeResult = trackingRealTime(response.data);
+
       setOrder(trackResult);
-      setOwnerOrder(ownerResult);
-      setTrackgRealTime(realTimeResult);
-      setLoading(false);
+      setTrackRealTime(realTimeResult);
+
+      const error = trackError(response.data);
+
+      if (error) {
+        setLoading(true);
+        setErrorTrack(true);
+      } else {
+        setLoading(false);
+        setErrorTrack(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +77,9 @@ function Tracking() {
       <PageHeader arrowBack />
       {loading ? (
         <NotFound>
-          <TitleMessage>Loading..</TitleMessage>
+          <TitleMessage>
+            {errorTrack ? 'TRACK NOT FOUND' : 'LOADING'}
+          </TitleMessage>
           <Line />
         </NotFound>
       ) : (
@@ -82,22 +89,21 @@ function Tracking() {
             <Line />
           </MessageContainer>
 
-          <OwnerInfo>
-            <OwnerText>{ownerOrder[0]}</OwnerText>
-            <OwnerText>{ownerOrder[1]}</OwnerText>
-          </OwnerInfo>
-
-          <Delivaries>
-            <Delivary>
+          <Deliveries>
+            <Delivery>
               {order.map(item => (
-                <DelivaryInfo>
-                  <DelivaryInfoName>{item.name}: </DelivaryInfoName>
-                  <DelivaryInfoData>
-                    {item.data ? item.data : 'Pendente'}
-                  </DelivaryInfoData>
-                </DelivaryInfo>
+                <DeliveryInfo key={`${item.name}${item.data}`}>
+                  <DeliveryInfoName>{item.name}: </DeliveryInfoName>
+                  <DeliveryInfoData
+                    ellipsizeMode="tail"
+                    numberOfLines={2}
+                    style={{ width: 100 }}
+                  >
+                    {item.data ? item.data.trim() : 'Pendente'}
+                  </DeliveryInfoData>
+                </DeliveryInfo>
               ))}
-            </Delivary>
+            </Delivery>
 
             <MessageContainer>
               <TitleMessage>Track</TitleMessage>
@@ -105,11 +111,11 @@ function Tracking() {
             </MessageContainer>
 
             {trackRealTime.map(item => (
-              <Delivary key={item.name}>
-                <DelivaryTitle>{item.name}</DelivaryTitle>
-                <DelivarySubTitle>
+              <Delivery key={item.name}>
+                <DeliveryTitle>{item.name}</DeliveryTitle>
+                <DeliverySubTitle>
                   {item.date ? item.date : 'Não concluído.'}
-                </DelivarySubTitle>
+                </DeliverySubTitle>
                 {(item.date && item.date.includes('Aguardando desembarque')) ||
                 item.date.includes('Preparando volumes') ? (
                   <Ionicons name="ios-albums" color="#004e9a" size={30} />
@@ -118,9 +124,9 @@ function Tracking() {
                 ) : (
                   <Ionicons name="ios-close" color="#c02d2e" size={40} />
                 )}
-              </Delivary>
+              </Delivery>
             ))}
-          </Delivaries>
+          </Deliveries>
         </Scroll>
       )}
     </Container>

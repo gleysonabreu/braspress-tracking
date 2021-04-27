@@ -10,8 +10,9 @@ import {
   TitleMessage,
   Line,
   Scroll,
-  Delivaries,
+  Deliveries,
 } from './styles';
+import { NotFound } from '../Tracking/styles';
 import PageHeader from '../../components/PageHeader';
 import TrackHome from '../../components/TrackHome';
 
@@ -25,20 +26,20 @@ export interface IOrders {
 
 function Homepage() {
   const { navigate } = useNavigation();
-  const [delivaries, setDelivaries] = useState<IOrders[]>([]);
+  const [deliveries, setDeliveries] = useState<IOrders[]>([]);
 
   useFocusEffect(
     useCallback(() => {
       getItems();
-    }, []),
+    }, [deliveries]),
   );
 
   const getItems = async (): Promise<void> => {
     const ordersStorage = await getOrders();
     if (ordersStorage) {
-      setDelivaries(ordersStorage);
+      setDeliveries(ordersStorage);
     } else {
-      setDelivaries([]);
+      setDeliveries([]);
     }
   };
 
@@ -66,13 +67,20 @@ function Homepage() {
         <Line />
       </MessageContainer>
 
-      <Scroll>
-        <Delivaries>
-          {delivaries.map(delivary => (
-            <TrackHome key={delivary.uuid} infosDelivary={delivary} />
-          ))}
-        </Delivaries>
-      </Scroll>
+      {deliveries.length === 0 ? (
+        <NotFound>
+          <TitleMessage>NO TRACKING FOUND</TitleMessage>
+          <Line />
+        </NotFound>
+      ) : (
+        <Scroll>
+          <Deliveries>
+            {deliveries.map(delivery => (
+              <TrackHome key={delivery.uuid} infosDelivery={delivery} />
+            ))}
+          </Deliveries>
+        </Scroll>
+      )}
     </Container>
   );
 }

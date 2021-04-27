@@ -15,11 +15,15 @@ const track = (htmlString: string) => {
   );
   const arrayNameTable: Array<string> = [];
   const arrayDataTable: Array<string> = [];
-  nodesNameTable.each((_index, nodeName) => {
-    arrayNameTable.push($(nodeName).text().trim());
+  nodesNameTable.each((index, nodeName) => {
+    if (index > 0) {
+      arrayNameTable.push($(nodeName).text().trim());
+    }
   });
-  nodesDataTable.each((_index, nodeData) => {
-    arrayDataTable.push($(nodeData).text().trim());
+  nodesDataTable.each((index, nodeData) => {
+    if (index > 0) {
+      arrayDataTable.push($(nodeData).text().trim());
+    }
   });
   const numNames = arrayNameTable.length;
   const arrayInfos: Array<{
@@ -54,9 +58,19 @@ const orderOwner = (htmlString: string) => {
   return arrayInfos;
 };
 
+const trackError = (htmlString: string) => {
+  const $ = cio.load(htmlString);
+  const nodeTrackError = $('.mainContainer').find('.cabecalho').text();
+  if (nodeTrackError) {
+    return true;
+  }
+
+  return false;
+};
+
 const trackingRealTime = (htmlString: string) => {
   const $ = cio.load(htmlString);
-  const nodesTrackingRealTime = $('.col-xs-offset-1.col-xs-10.bs-wizard').find(
+  const nodesTrackingRealTime = $('.col-xs-12.bs-wizard').find(
     '.col-xs-2.bs-wizard-step',
   );
   const arrayRealTime: Array<ITrackingRealTime> = [];
@@ -73,4 +87,4 @@ const trackingRealTime = (htmlString: string) => {
   return arrayRealTime;
 };
 
-export { track, orderOwner, trackingRealTime, ITrackingRealTime };
+export { track, orderOwner, trackingRealTime, ITrackingRealTime, trackError };

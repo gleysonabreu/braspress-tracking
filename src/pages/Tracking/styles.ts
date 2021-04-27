@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import styled from 'styled-components/native';
 
@@ -45,14 +44,14 @@ export const OwnerText = styled.Text`
   font-size: 18px;
 `;
 
-export const Delivaries = styled.View`
+export const Deliveries = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: 30px;
   margin-bottom: 50px;
 `;
 
-export const Delivary = styled.View`
+export const Delivery = styled.View`
   background: #eeeeee;
   width: 80%;
   padding: 10px;
@@ -62,32 +61,32 @@ export const Delivary = styled.View`
   justify-content: center;
 `;
 
-export const DelivaryInfo = styled.View`
+export const DeliveryInfo = styled.View`
   flex: 1;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
 
-export const DelivaryInfoName = styled.Text`
+export const DeliveryInfoName = styled.Text`
   font-size: 15px;
   text-align: center;
 `;
 
-export const DelivaryInfoData = styled.Text`
+export const DeliveryInfoData = styled.Text`
   font-size: 18px;
   font-weight: bold;
   color: #d58500;
   text-align: center;
 `;
 
-export const DelivaryTitle = styled.Text`
+export const DeliveryTitle = styled.Text`
   font-size: 17px;
   font-weight: bold;
   text-align: center;
 `;
 
-export const DelivarySubTitle = styled.Text`
+export const DeliverySubTitle = styled.Text`
   font-size: 15px;
   color: #d58500;
   text-align: center;

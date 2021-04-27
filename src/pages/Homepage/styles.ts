@@ -29,7 +29,7 @@ export const Scroll = styled.ScrollView`
   flex: 1;
 `;
 
-export const Delivaries = styled.View`
+export const Deliveries = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: 30px;

@@ -14,7 +14,7 @@ import {
 } from './styles';
 
 interface IProps {
-  infosDelivary: {
+  infosDelivery: {
     uuid: string;
     docIdentify: string;
     numberIdentify: string;
@@ -23,7 +23,7 @@ interface IProps {
   };
 }
 
-const TrackHome: React.FC<IProps> = ({ infosDelivary }) => {
+const TrackHome: React.FC<IProps> = ({ infosDelivery }) => {
   const { navigate } = useNavigation();
 
   const handleTracking = ({
@@ -36,9 +36,9 @@ const TrackHome: React.FC<IProps> = ({ infosDelivary }) => {
   return (
     <Delivary>
       <HeaderDelivary>
-        <TitleDelivary>{infosDelivary.title}</TitleDelivary>
+        <TitleDelivary>{infosDelivery.title}</TitleDelivary>
         <RectButton
-          onPress={() => removeOrder(infosDelivary.uuid)}
+          onPress={() => removeOrder(infosDelivery.uuid)}
           style={{
             backgroundColor: '#004e9a',
             borderRadius: 50,
@@ -52,15 +52,28 @@ const TrackHome: React.FC<IProps> = ({ infosDelivary }) => {
 
       <BodyDelivary>
         <ItemBodyDelivary>
-          CPNJ: <ColorBlack>{infosDelivary.docIdentify}</ColorBlack>
+          CPNJ:{' '}
+          <ColorBlack
+            ellipsizeMode="tail"
+            numberOfLines={2}
+            style={{ width: 100 }}
+          >
+            {infosDelivery.docIdentify}
+          </ColorBlack>
         </ItemBodyDelivary>
         <ItemBodyDelivary>
           Número encomenda:{' '}
-          <ColorBlack>{infosDelivary.numberIdentify}</ColorBlack>
+          <ColorBlack
+            ellipsizeMode="tail"
+            numberOfLines={2}
+            style={{ width: 100 }}
+          >
+            {infosDelivery.numberIdentify}
+          </ColorBlack>
         </ItemBodyDelivary>
 
         <RectButton
-          onPress={() => handleTracking(infosDelivary)}
+          onPress={() => handleTracking(infosDelivery)}
           style={{
             backgroundColor: '#004e9a',
             padding: 10,
